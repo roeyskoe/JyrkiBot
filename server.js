@@ -17,6 +17,9 @@ bot.on("message", async message => {
     if(command === "jyrki") {
         await message.channel.send("älä tyrki");
     }
+    else if(command == "kuva"){
+        await message.channel.send("kuva", { files: ["kuva.jpg"] });
+    }
 });
 
 bot.login(apikey);

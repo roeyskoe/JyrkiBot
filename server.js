@@ -29,7 +29,7 @@ bot.on("message", async message => {
     if(command === "apua") {
         await message.channel.send("Älä huoli, kyllä se siitä :)");
     }
-    else if(command == "jyrki"){
+    else if(command === "jyrki"){
         const currtime = new Date();
         if(currtime.getTime()-prevtime < 60000){ // yksi minuutti
             await message.channel.send("Jyrkistä on juuri äsken otettu kuva. Odota pieni hetki :)");

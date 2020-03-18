@@ -12,6 +12,8 @@ const myCamera = new PiCamera({
   nopreview: true,
 });
 
+var date = new Date();
+var prevtime = date.getTime(); //Estetään spämmiä :D
 
 const bot = new Discord.Client();
 
@@ -23,14 +25,20 @@ bot.on("message", async message => {
     if(message.author.bot) return; // Jos botti lähettää viestin niin ignoorataan
     if(message.channel.name != "jyrkikanava") return; // Kuunnellaan vaan tietyllä kanavalla
     const command = message.content.toLowerCase();
-  
-    if(command === "jyrki") {
-        await message.channel.send("älä tyrki");
+
+    if(command === "apua") {
+        await message.channel.send("Älä huoli, kyllä se siitä :)");
     }
-    else if(command == "kuva"){
+    else if(command == "jyrki"){
+        const currtime = new Date();
+        if(currtime.getTime()-prevtime < 60000){ // yksi minuutti
+            await message.channel.send("Jyrkistä on juuri äsken otettu kuva. Odota pieni hetki :)");
+            return;
+        }
         myCamera.snap()
         .then((result) => {
-            message.channel.send("kuva", { files: ["kuva.jpg"] });
+            message.channel.send("", { files: ["kuva.jpg"] });
+            prevtime = currtime.getTime();
         })
         .catch((error) => {
             console.log(error);

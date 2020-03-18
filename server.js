@@ -12,8 +12,22 @@ const myCamera = new PiCamera({
   nopreview: true,
 });
 
-var date = new Date();
-var prevtime = date.getTime(); //Estetään spämmiä :D
+const commands = {
+    apua: function(msg){
+        msg.channel.send("Älä huoli, kyllä se siitä :)");
+    },
+    jyrki: function(msg){
+        myCamera.snap()
+            .then((result) => {
+                msg.channel.send("", { files: ["kuva.jpg"] });
+            })
+            .catch((error) => {
+                msg.channel.send(error);
+        });
+    }
+}
+
+var prevtime = 0;
 
 const bot = new Discord.Client();
 
@@ -27,27 +41,19 @@ bot.on("message", async message => {
 
     var currtime = new Date();
     currtime = currtime.getTime();
+
     if(currtime-prevtime < 60000){ // yksi minuutti
         await message.channel.send("Älä hätäile, Jyrki haluaa olla hetken rauhassa :(");
         return;
     }
 
     prevtime = currtime;
-    
     const command = message.content.toLowerCase();
 
-    if(command === "apua") {
-        await message.channel.send("Älä huoli, kyllä se siitä :)");
+    if(command in commands){
+        await commands[command](message);
     }
-    else if(command === "jyrki"){
-        myCamera.snap()
-        .then((result) => {
-            message.channel.send("", { files: ["kuva.jpg"] });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
+
 });
 
 bot.login(apikey);

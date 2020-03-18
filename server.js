@@ -25,13 +25,15 @@ bot.on("message", async message => {
     if(message.author.bot) return; // Jos botti lähettää viestin niin ignoorataan
     if(message.channel.name != "jyrkikanava") return; // Kuunnellaan vaan tietyllä kanavalla
 
-    const currtime = (new Date()).getTime();
+    var currtime = new Date();
+    currtime = currtime.getTime();
     if(currtime-prevtime < 60000){ // yksi minuutti
         await message.channel.send("Älä hätäile, Jyrki haluaa olla hetken rauhassa :(");
-        prevtime = currtime;
         return;
     }
 
+    prevtime = currtime;
+    
     const command = message.content.toLowerCase();
 
     if(command === "apua") {

@@ -3,6 +3,16 @@ const apikey = process.env.API_KEY; // Ladataan salainen api-avain .env-tiedosto
 
 const Discord = require("discord.js");
 
+const PiCamera = require('pi-camera');
+const myCamera = new PiCamera({
+  mode: 'photo',
+  output: `kuva.jpg`,
+  width: 640,
+  height: 480,
+  nopreview: true,
+});
+
+
 const bot = new Discord.Client();
 
 bot.on("ready", () => {
@@ -18,7 +28,13 @@ bot.on("message", async message => {
         await message.channel.send("älä tyrki");
     }
     else if(command == "kuva"){
-        await message.channel.send("kuva", { files: ["kuva.jpg"] });
+        myCamera.snap()
+        .then((result) => {
+            message.channel.send("kuva", { files: ["kuva.jpg"] });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 });
 

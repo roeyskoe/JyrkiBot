@@ -6,18 +6,17 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 bot.on("ready", () => {
-  console.log("Ready"); 
-
+    console.log("Ready"); 
 });
 
 bot.on("message", async message => {
-  if(message.author.bot) return; // Jos botti lähettää viestin niin ignoorataan
-
-  const command = message.content.toLowerCase();
+    if(message.author.bot) return; // Jos botti lähettää viestin niin ignoorataan
+    if(message.channel.name != "jyrkikanava") return; // Kuunnellaan vaan tietyllä kanavalla
+    const command = message.content.toLowerCase();
   
-  if(command === "jyrki") {
-    await message.channel.send("älä tyrki");
-  }
+    if(command === "jyrki") {
+        await message.channel.send("älä tyrki");
+    }
 });
 
 bot.login(apikey);

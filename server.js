@@ -42,15 +42,16 @@ bot.on("message", async message => {
     var currtime = new Date();
     currtime = currtime.getTime();
 
-    if(currtime-prevtime < 60000){ // yksi minuutti
-        await message.channel.send("Älä hätäile, Jyrki haluaa olla hetken rauhassa :(");
-        return;
-    }
-
-    prevtime = currtime;
     const command = message.content.toLowerCase();
 
     if(command in commands){
+        if(currtime-prevtime < 60000){ // yksi minuutti
+            await message.channel.send("Älä hätäile, Jyrki haluaa olla hetken rauhassa :(");
+            return;
+        }
+    
+        prevtime = currtime;
+        
         await commands[command](message);
     }
 

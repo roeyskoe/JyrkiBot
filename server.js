@@ -7,8 +7,8 @@ const PiCamera = require('pi-camera');
 const myCamera = new PiCamera({
   mode: 'photo',
   output: `kuva.jpg`,
-  width: 640,
-  height: 480,
+  width: 1920,
+  height: 1080,
   nopreview: true,
 });
 
@@ -51,7 +51,7 @@ bot.on("message", async message => {
         }
     
         prevtime = currtime;
-        
+
         await commands[command](message);
     }
 

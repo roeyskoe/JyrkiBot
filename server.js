@@ -8,7 +8,7 @@ const myCamera = new PiCamera({
   mode: 'photo',
   output: `kuva.jpg`,
   width: 1920,
-  height: 1080,
+  height: 1920,
   nopreview: true,
 });
 

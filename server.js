@@ -24,6 +24,22 @@ const commands = {
             .catch((error) => {
                 msg.channel.send(error);
         });
+    },
+    tallennakaikki: async function(msg){ // Tätä ei tietenkään jätettäisi oikeaan tuotantobottiin :)
+        msg.channel.messages.fetch().then(async function(m){
+            global.m = m;
+            global.msgs = m.array();
+            while(global.m.size > 0){ // Discord antaa enintään 100 viestiä kerralla.
+                await msg.channel.messages.fetch({before: global.m.array()[global.m.size-1]["id"]}).then(function(ms){
+                    global.msgs = global.msgs.concat(ms.array());
+                    global.m = ms;
+                    console.log(global.msgs.length);
+                })
+            }
+            const fs = require('fs');
+            let data = JSON.stringify(global.msgs);
+            fs.writeFileSync('viestit.json', data);
+        })
     }
 }
 
